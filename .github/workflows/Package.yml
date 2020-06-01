@@ -34,11 +34,15 @@ jobs:
     - name: Package
       run: npx electron-packager ./ Medis --platform=darwin --arch=x64
       working-directory: ./medis
+
+    - uses: montudor/action-zip@v0.1.0
+      with:
+        args: zip -qq -r ./Medis.app.zip medis/Medis-darwin-x64/Medis.app
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
         # Artifact name
-        name: Medis.app
+        name: Medis.app.zip
         # A file, directory or wildcard pattern that describes what to upload
-        path: medis/Medis-darwin-x64/Medis.app
+        path: ./Medis.app.zip
