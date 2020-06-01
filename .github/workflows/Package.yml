@@ -31,8 +31,11 @@ jobs:
       run: NODE_ENV=development npm run build
       working-directory: ./medis
     
+    - name: Copy icon
+      run: cp medis.icns ./medis/medis.icns
+    
     - name: Package
-      run: npx electron-packager ./ Medis --platform=darwin --arch=x64
+      run: npx electron-packager ./ Medis --platform=darwin --arch=x64 --icon=medis.icns
       working-directory: ./medis
 
     - uses: montudor/action-zip@v0.1.0
