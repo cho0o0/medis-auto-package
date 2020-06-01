@@ -31,14 +31,21 @@ jobs:
       run: NODE_ENV=development npm run build
       working-directory: ./medis
     
+    - name: Copy icon
+      run: cp medis.icns ./medis/medis.icns
+    
     - name: Package
-      run: npx electron-packager ./ Medis --platform=darwin --arch=x64
+      run: npx electron-packager ./ Medis --platform=darwin --arch=x64 --icon=medis.icns
       working-directory: ./medis
+
+    - name: Zip
+      run: zip -qq -r Medis.app.zip Medis.app
+      working-directory: ./medis/Medis-darwin-x64
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
         # Artifact name
-        name: Medis.app
+        name: Medis.app.zip
         # A file, directory or wildcard pattern that describes what to upload
-        path: medis/Medis-darwin-x64/Medis.app
+        path: ./medis/Medis-darwin-x64/Medis.app.zip
